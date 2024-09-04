@@ -5,7 +5,10 @@ import { movieDB } from "@/libs/movieDB";
 
 export default function SearchResultPage() {
   //tip1 : before filtering movie, replace all "%20" with " " (space) in the input
-  // const processedSearchInput = ...
+  const processedSearchInput = String(params.searchInput).replaceAll(
+    "%20",
+    " "
+  );
 
   /*
   tip2 : Use "includes" string method to check substring
@@ -13,18 +16,29 @@ export default function SearchResultPage() {
 
   tip3 : To implement case insensitive searching, use "toLocaleLowerCase" string method
   to convert movie title and searchInput to lower case 
-  const filteredMovies = movieDB.filter((movie) =>
-    you code here...
-  );
   */
-
+ const movieList = movieDB.filter((x) =>
+    x.tatle.toLowwerCase().includes(processedSearchInput.toLowwerCase())
+  );
+  console.log(movieList);
   return (
     <div>
       <p className="fw-bold fs-4 text-center my-0">
-        Searching &quot; ... &quot;
+        Searching &quot; {processedSearchInput} &quot;
       </p>
-      <p className="fw-bold fs-4 text-center">Found ... result(s)</p>
+      <p className="fw-bold fs-4 text-center">Found {movieList.length} result(s)</p>
       {/* Use  "filteredMovies" variable to map-loop rendering MovieRow component */}
+    
+    {movieList.map((x,i) => (
+      <MovieRow
+        key={x.id}
+        id={x.id}
+        title={x.title}
+        detail={x.detail}
+        rating={x.rating}
+        number={i+1}
+      />
+    ))}
     </div>
   );
 }
