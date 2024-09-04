@@ -3,7 +3,7 @@
 import { MovieRow } from "@/components/MovieRow";
 import { movieDB } from "@/libs/movieDB";
 
-export default function SearchResultPage() {
+export default function SearchResultPage({params}) {
   //tip1 : before filtering movie, replace all "%20" with " " (space) in the input
   const processedSearchInput = String(params.searchInput).replaceAll(
     "%20",
@@ -21,6 +21,7 @@ export default function SearchResultPage() {
     x.tatle.toLowwerCase().includes(processedSearchInput.toLowwerCase())
   );
   console.log(movieList);
+  
   return (
     <div>
       <p className="fw-bold fs-4 text-center my-0">
